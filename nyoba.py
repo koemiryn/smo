@@ -4,6 +4,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 import random
+from io import BytesIO
+
 
 st.set_page_config(page_title="STRESS ME OUT", page_icon="😊")
 
