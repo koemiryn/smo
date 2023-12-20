@@ -157,10 +157,10 @@ def sign_up():
     new_password = st.text_input("New Password", type="password")
 
     if st.button("Sign Up 👉"):
-        # Check if the user_info.csv file exists
-        if os.path.isfile("user_info.csv"):
+        # Try to read the existing user_info.csv file
+        try:
             user_info = pd.read_csv("user_info.csv", index_col=0)
-        else:
+        except FileNotFoundError:
             # If the file doesn't exist, create an empty DataFrame
             user_info = pd.DataFrame(columns=["password"])
 
@@ -170,8 +170,9 @@ def sign_up():
         user_info = pd.concat([user_info, new_user_info])
 
         # Save the updated user_info to user_info.csv
-        user_info.to_csv("user_info.csv")
+        user_info.to_csv("user_info.csv", index_label="username")
         st.success("🎉 Successfully signed up!")
+
 
 # Main function
 def main():
