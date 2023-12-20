@@ -153,25 +153,25 @@ def sign_up():
 def recommend_nearest_psychologist_page(user_location, selected_city):
     psychologist_info = {
         "Bandar Lampung": [
-            {"name": "Psikolog Yurni, M.Psi.", "profile_link": "https://www.halodoc.com/tanya-dokter/yurni-m-psi-psikolog", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\profil pa yurni.png"}
+            {"name": "Psikolog Yurni, M.Psi.", "profile_link": "https://www.halodoc.com/tanya-dokter/yurni-m-psi-psikolog", "image_path": r"https://lh3.google.com/u/0/d/1hdJi5ozuBTqesjaLYn0BTvl2tyiUMaZW=w756-h877-iv1"}
         ],
         "Metro": [
-            {"name": "Octa Reni Setiawati, S.Psi, M.Psi, Psikolog", "profile_link": "https://www.praktikpsikologi.com/", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\bu okta.jpg"}
+            {"name": "Octa Reni Setiawati, S.Psi, M.Psi, Psikolog", "profile_link": "https://www.praktikpsikologi.com/", "image_path": r"https://lh3.google.com/u/0/d/1NvPECY-JWHm64QH2kjJuuLJCWbyp8mcP=w1920-h877-iv1"}
         ],
         "Jakarta": [
-            {"name": "Jennyfer, M.Psi., Psikolog", "profile_link": "https://www.instagram.com/jen.psikolog/", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\download.jpeg"}
+            {"name": "Jennyfer, M.Psi., Psikolog", "profile_link": "https://www.instagram.com/jen.psikolog/", "image_path": r"https://lh3.google.com/u/0/d/1ZV1tHTgHDHLOxNlVy18pIsShYSap4605=w756-h877-iv1"}
         ],
         "Surabaya": [
-            {"name": "Ratna Sari M.Psi.,Psikolog", "profile_link": "https://ertamentari.com/", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\bu ratna.jpg"}
+            {"name": "Ratna Sari M.Psi.,Psikolog", "profile_link": "https://ertamentari.com/", "image_path": r"https://lh3.google.com/u/0/d/14K1MF62OmXdyU64rELfRn7LLpbWjqYKn=w756-h877-iv1"}
         ],
         "Yogyakarta": [
-            {"name": "Mirza Adi Prabowo, M.Psi., Psikolog", "profile_link": "https://mirzaadi.my.id/", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\pa mirza.jpeg"}
+            {"name": "Mirza Adi Prabowo, M.Psi., Psikolog", "profile_link": "https://mirzaadi.my.id/", "image_path": r"https://lh3.google.com/u/0/d/1Plg4bwzrHzwiHuGKDlqVE-IR2nfs8vpz=w756-h877-iv1"}
         ],
         "Medan": [
-            {"name": "Dr. Manahap Cerarius Fransiskus Pardosi M.Ked, Sp.KJ", "profile_link": "https://www.halodoc.com/tanya-dokter/dr-manahap-cerarius-fransiskus-pard", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\pa mana.png"}
+            {"name": "Dr. Manahap Cerarius Fransiskus Pardosi M.Ked, Sp.KJ", "profile_link": "https://www.halodoc.com/tanya-dokter/dr-manahap-cerarius-fransiskus-pard", "image_path": r"https://lh3.google.com/u/0/d/1SJcVc1hQmelUmtBFgs90COC1XSSvTXRN=w756-h877-iv1"}
         ],
         "Makassar": [
-            {"name": "Widia Julianti Siddik, S.Psi., M.Psi., Psikolog", "profile_link": "https://widiapsi.carrd.co/", "image_path": r"C:\Users\rynko\Documents\nyobaaaaa\bu widi.png"}
+            {"name": "Widia Julianti Siddik, S.Psi., M.Psi., Psikolog", "profile_link": "https://widiapsi.carrd.co/", "image_path": r"https://lh3.google.com/u/0/d/1KVqXjoMU5firvD_zskObfuwvUNM3GH_r=w756-h877-iv1"}
         ]
     }
 
@@ -191,7 +191,7 @@ def main():
         st.session_state.logged_in = False
 
     # tambah gambar
-    image = Image.open(r"C:\Users\rynko\Documents\nyobaaaaa\gambar web.jpg")
+    image = Image.open(r"https://lh3.google.com/u/0/d/1nT3GboT9stzY6asq_lhYqn0sPlw3ycC2=w756-h877-iv1")
     st.image(image, caption="STRESS ME OUT", use_column_width=True)
 
     # Sidebar
