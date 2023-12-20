@@ -9,8 +9,15 @@ import requests
 
 # Authentication function
 def authenticate(username, password, user_info):
-    if username in user_info.index and password == user_info.loc[username, "password"]:
-        return True
+    # Check if username is in the user_info DataFrame
+    if username in user_info['username'].values:
+        # Retrieve the stored password for the given username
+        stored_password = user_info.loc[user_info['username'] == username, 'password'].iloc[0]
+        
+        # Check if the entered password matches the stored password
+        if password == stored_password:
+            return True
+
     return False
 
 # Quiz stress detection
