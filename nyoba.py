@@ -5,9 +5,7 @@ from datetime import datetime, timedelta
 import os
 import random
 from io import BytesIO
-
-
-st.set_page_config(page_title="STRESS ME OUT", page_icon="😊")
+import requests
 
 # Autentikasi fungsi
 def authenticate(username, password, user_info):
@@ -55,10 +53,11 @@ def stress_detection_page():
     if stress_level == "Rendah":
         st.success(f"Karena Stress level Anda {stress_level}, Anda dapat meningkatkan ibadah kepada Tuhan Yang Maha Esa, dan tetap melakukan berbagai kegiatan positif!")
     elif stress_level == "Normal":
-        st.warning(f"Karena Stress level Anda {stress_level}, Anda dapat berolahraga dengan teratur, melakukan hobi kesukaan Anda, baik itu yang  menenangkan atau tidak, dan berkumpul bersama keluarga atau teman.")
+        st.warning(f"Karena Stress level Anda {stress_level}, Anda dapat berolahraga dengan teratur, melakukan hobi kesukaan Anda, baik itu yang menenangkan atau tidak, dan berkumpul bersama keluarga atau teman.")
     else:
         st.error(f"Karena Stress level Anda {stress_level}. Anda dapat membicarakan keluhan Anda kepada seseorang yang percaya dan mencari bantuan psikologi kepada ahli psikologi dan mencari jalan keluar dari stress Anda.")
 
+# youtube recommendation page
 def youtube_recommendation_page():
     st.title("YouTube Video Recommendations")
     st.write("Check out this stress-relief video!")
@@ -73,7 +72,6 @@ def youtube_recommendation_page():
     # Display YouTube thumbnail 
     thumbnail_html = f'<p align="center"><a href="{youtube_video_link}" target="_blank"><img src="{youtube_thumbnail_link}" width="200"></a></p>'
     st.markdown(thumbnail_html, unsafe_allow_html=True)
-
 
 # Kalkulasi stress
 def calculate_stress_level(user_responses):
@@ -120,37 +118,6 @@ def generate_weekly_report():
     except FileNotFoundError:
         st.warning("Tidak ada Weekly Report untuk minggu ini.")
 
-def youtube_recommendation_page():
-    st.title("Rekomendasi Video Youtube")
-    st.write("Berikut beberapa rekomendasi Youtube Video yang Anda dapat tonton karena terkait dengan kesehatan mental, Anda bisa tonton dengan mengklik gambar dari video tersebut. Semoga video-video ini dapat membantu!")
-
-    # link yt video
-    videos = [
-        {"video_link": "https://youtu.be/LeFkkFCFbmE?feature=shared", "thumbnail_link": "https://i.ytimg.com/vi/LeFkkFCFbmE/maxresdefault.jpg"},
-        {"video_link": "https://youtu.be/Btpwu4EHhGA?feature=shared", "thumbnail_link": "https://i.ytimg.com/vi/Btpwu4EHhGA/maxresdefault.jpg"},
-        {"video_link": "https://youtu.be/4x58uUawlZM?feature=shared", "thumbnail_link": "https://i.ytimg.com/vi/4x58uUawlZM/maxresdefault.jpg"},
-    ]
-
-    # Display YouTube thumbnails 
-    for video in videos:
-        thumbnail_html = f'<div style="display: flex; justify-content: center; margin-bottom: 20px;"><a href="{video["video_link"]}" target="_blank"><img src="{video["thumbnail_link"]}" width="350"></a></div>'
-        st.markdown(thumbnail_html, unsafe_allow_html=True)
-
-
-# Sign-up 
-def sign_up():
-    st.title("Sign Up")
-    new_username = st.text_input("New Username")
-    new_password = st.text_input("New Password", type="password", key="new_password")
-
-    if st.button("Sign Up 👉"):
-        if new_username.strip() == "":
-            st.error("Username tidak boleh kosong.")
-        else:
-            user_info = pd.DataFrame({"password": [new_password]}, index=[new_username])
-            user_info.to_csv("user_info.csv")
-            st.success(f"✅ User {new_username} successfully signed up!")
-
 # Rekomendasi psikolog
 def recommend_nearest_psychologist_page(user_location, selected_city):
     psychologist_info = {
@@ -182,18 +149,19 @@ def recommend_nearest_psychologist_page(user_location, selected_city):
     for psychologist in psychologists:
         st.success(f"Psikolog terdekat untuk Anda di {selected_city}: {psychologist['name']}")
         st.markdown(f"Link Halodoc: [{psychologist['name']}]({psychologist['profile_link']})")
-        image = Image.open(psychologist["image_path"])
+        image = Image.open(BytesIO(requests.get(psychologist["image_path"]).content))
         st.image(image, caption=f"Profil Psikolog {psychologist['name']}", use_column_width=True)
-
 
 # Main function
 def main():
-
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
 
-    # tambah gambar
-    image = Image.open(r"https://lh3.google.com/u/0/d/1nT3GboT9stzY6asq_lhYqn0sPlw3ycC2=w756-h877-iv1")
+    # Load the image from URL
+    image_url = "https://lh3.google.com/u/0/d/1nT3GboT9stzY6asq_lhYqn0sPlw3ycC2=w756-h877-iv1"
+    response = requests.get(image_url)
+    image = Image.open(BytesIO(response.content))
+    
     st.image(image, caption="STRESS ME OUT", use_column_width=True)
 
     # Sidebar
