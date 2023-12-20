@@ -7,13 +7,13 @@ import random
 from io import BytesIO
 import requests
 
-# Autentikasi fungsi
+# Authentication function
 def authenticate(username, password, user_info):
     if username in user_info.index and password == user_info.loc[username, "password"]:
         return True
     return False
 
-# quiz deteksi stress
+# Quiz stress detection
 def stress_detection_page():
     st.title("STRESS ME OUT")
     st.write("Pilihlah sesuai dengan kondisi Anda hari ini.")
@@ -25,16 +25,16 @@ def stress_detection_page():
         "Seberapa sering Anda merasakan gugup sebelum melakukan suatu aktivitas?",
     ]
 
-    # respon user
+    # User responses
     user_responses = {}
 
-    # tombol quiz
+    # Quiz buttons
     for i, question in enumerate(questions, start=1):
         user_response = st.radio(f"Q{i}: {question}", options=["Tidak pernah", "Jarang", "Sering", "Setiap saat"])
         numerical_response = {"Tidak pernah": 0, "Jarang": 1, "Sering": 2, "Setiap saat": 3}
         user_responses[f"Q{i}"] = numerical_response[user_response]
 
-    # Save ke CSV
+    # Save to CSV
     save_responses(user_responses)
 
     stress_level = calculate_stress_level(user_responses)
@@ -44,11 +44,11 @@ def stress_detection_page():
     if stress_level == "Rendah":
         st.success(f"😊 Stress level Anda {stress_level}! Menjaga tingkat stres tetap rendah adalah kunci untuk kesejahteraan mental.")
     elif stress_level == "Normal":
-        st.warning(f"😐 Stress level Anda {stress_level}. Menjaga tingkat stres tetap normal melibatkan sejumlah kegiatan positif yang bisa mencegah tingkat stress menjadi lebih tinggi.")
+        st.warning(f"😐 Stress level Anda {stress_level}. Menjaga tingkat stres tetap normal melibatkan sejumlah kegiatan positif yang bisa mencegah tingkat stres menjadi lebih tinggi.")
     else:
         st.error(f"😰 Stress level Anda {stress_level}. Menurunkan tingkat stres tinggi melibatkan inisiatif dari diri sendiri, apabila tingkat stress sudah tinggi patut diwaspadai dan ditangani.")
 
-    # Display rekomendasi
+    # Display recommendations
     st.subheader("Apa yang harus dilakukan?")
     if stress_level == "Rendah":
         st.success(f"Karena Stress level Anda {stress_level}, Anda dapat meningkatkan ibadah kepada Tuhan Yang Maha Esa, dan tetap melakukan berbagai kegiatan positif!")
@@ -57,7 +57,7 @@ def stress_detection_page():
     else:
         st.error(f"Karena Stress level Anda {stress_level}. Anda dapat membicarakan keluhan Anda kepada seseorang yang percaya dan mencari bantuan psikologi kepada ahli psikologi dan mencari jalan keluar dari stress Anda.")
 
-# youtube recommendation page
+# YouTube recommendation page
 def youtube_recommendation_page():
     st.title("YouTube Video Recommendations")
     st.write("Check out this stress-relief video!")
@@ -73,7 +73,7 @@ def youtube_recommendation_page():
     thumbnail_html = f'<p align="center"><a href="{youtube_video_link}" target="_blank"><img src="{youtube_thumbnail_link}" width="200"></a></p>'
     st.markdown(thumbnail_html, unsafe_allow_html=True)
 
-# Kalkulasi stress
+# Calculate stress level
 def calculate_stress_level(user_responses):
     total_response = sum(user_responses.values())
     
@@ -84,7 +84,7 @@ def calculate_stress_level(user_responses):
     else:
         return "Tinggi"
 
-# Menyimpan respon
+# Save responses
 def save_responses(user_responses):
     today = datetime.now().date()
     filename = f"weekly_report_{today}.csv"
@@ -104,21 +104,21 @@ def reset_weekly_report():
     filename = f"weekly_report_{datetime.now().date()}.csv"
     try:
         os.remove(filename)
-        st.success("🔄 Weekly Report sudah direset!")
+        st.success("🔄 Weekly Report has been reset!")
     except FileNotFoundError:
-        st.warning("Tidak ada Weekly Report untuk direset.")
+        st.warning("No Weekly Report to reset.")
 
-# buat weekly report
+# Generate weekly report
 def generate_weekly_report():
-    st.title("Laporan Weekly Stress")
+    st.title("Weekly Stress Report")
     try:
         latest_report = pd.read_csv(f"weekly_report_{datetime.now().date()}.csv")
-        st.write("Weekly report terakhir")
+        st.write("Latest weekly report")
         st.table(latest_report)
     except FileNotFoundError:
-        st.warning("Tidak ada Weekly Report untuk minggu ini.")
+        st.warning("No Weekly Report for this week.")
 
-# Rekomendasi psikolog
+# Recommend nearest psychologist
 def recommend_nearest_psychologist_page(user_location, selected_city):
     psychologist_info = {
         "Bandar Lampung": [
@@ -147,9 +147,27 @@ def recommend_nearest_psychologist_page(user_location, selected_city):
     psychologists = psychologist_info.get(selected_city, [])
 
     for psychologist in psychologists:
-        st.success(f"Psikolog terdekat untuk Anda di {selected_city}: {psychologist['name']}")
+        st.success(f"Nearest psychologist for you in {selected_city}: {psychologist['name']}")
         st.markdown(f"Link Halodoc: [{psychologist['name']}]({psychologist['profile_link']})")
-        
+
+# Sign up function
+def sign_up():
+    st.title("Sign Up Page")
+    new_username = st.text_input("New Username")
+    new_password = st.text_input("New Password", type="password")
+
+    if st.button("Sign Up 👉"):
+        user_info = pd.read_csv("user_info.csv", index_col=0)
+        new_user_info = pd.DataFrame({"password": [new_password]}, index=[new_username])
+
+        if user_info is None:
+            user_info = new_user_info
+        else:
+            user_info = pd.concat([user_info, new_user_info])
+
+        user_info.to_csv("user_info.csv")
+        st.success("🎉 Successfully signed up!")
+
 # Main function
 def main():
     if 'logged_in' not in st.session_state:
@@ -171,9 +189,9 @@ def main():
                 user_info = pd.read_csv("user_info.csv", index_col=0)
                 if authenticate(username, password, user_info):
                     st.session_state.logged_in = True
-                    st.success("🎉 Berhasil log-in!")
+                    st.success("🎉 Successfully logged in!")
                 else:
-                    st.error("❌ Username atau password tidak valid.")
+                    st.error("❌ Invalid username or password.")
     elif choice == "Sign Up":
         if not st.session_state.logged_in:
             sign_up()
