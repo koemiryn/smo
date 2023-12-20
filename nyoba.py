@@ -122,25 +122,25 @@ def generate_weekly_report():
 def recommend_nearest_psychologist_page(user_location, selected_city):
     psychologist_info = {
         "Bandar Lampung": [
-            {"name": "Psikolog Yurni, M.Psi.", "profile_link": "https://www.halodoc.com/tanya-dokter/yurni-m-psi-psikolog", "image_path": r"https://lh3.google.com/u/0/d/1hdJi5ozuBTqesjaLYn0BTvl2tyiUMaZW=w756-h877-iv1"}
+            {"name": "Psikolog Yurni, M.Psi.", "profile_link": "https://www.halodoc.com/tanya-dokter/yurni-m-psi-psikolog"}
         ],
         "Metro": [
-            {"name": "Octa Reni Setiawati, S.Psi, M.Psi, Psikolog", "profile_link": "https://www.praktikpsikologi.com/", "image_path": r"https://lh3.google.com/u/0/d/1NvPECY-JWHm64QH2kjJuuLJCWbyp8mcP=w1920-h877-iv1"}
+            {"name": "Octa Reni Setiawati, S.Psi, M.Psi, Psikolog", "profile_link": "https://www.praktikpsikologi.com/"}
         ],
         "Jakarta": [
-            {"name": "Jennyfer, M.Psi., Psikolog", "profile_link": "https://www.instagram.com/jen.psikolog/", "image_path": r"https://lh3.google.com/u/0/d/1ZV1tHTgHDHLOxNlVy18pIsShYSap4605=w756-h877-iv1"}
+            {"name": "Jennyfer, M.Psi., Psikolog", "profile_link": "https://www.instagram.com/jen.psikolog/"}
         ],
         "Surabaya": [
-            {"name": "Ratna Sari M.Psi.,Psikolog", "profile_link": "https://ertamentari.com/", "image_path": r"https://lh3.google.com/u/0/d/14K1MF62OmXdyU64rELfRn7LLpbWjqYKn=w756-h877-iv1"}
+            {"name": "Ratna Sari M.Psi.,Psikolog", "profile_link": "https://ertamentari.com/"}
         ],
         "Yogyakarta": [
-            {"name": "Mirza Adi Prabowo, M.Psi., Psikolog", "profile_link": "https://mirzaadi.my.id/", "image_path": r"https://lh3.google.com/u/0/d/1Plg4bwzrHzwiHuGKDlqVE-IR2nfs8vpz=w756-h877-iv1"}
+            {"name": "Mirza Adi Prabowo, M.Psi., Psikolog", "profile_link": "https://mirzaadi.my.id/"}
         ],
         "Medan": [
-            {"name": "Dr. Manahap Cerarius Fransiskus Pardosi M.Ked, Sp.KJ", "profile_link": "https://www.halodoc.com/tanya-dokter/dr-manahap-cerarius-fransiskus-pard", "image_path": r"https://lh3.google.com/u/0/d/1SJcVc1hQmelUmtBFgs90COC1XSSvTXRN=w756-h877-iv1"}
+            {"name": "Dr. Manahap Cerarius Fransiskus Pardosi M.Ked, Sp.KJ", "profile_link": "https://www.halodoc.com/tanya-dokter/dr-manahap-cerarius-fransiskus-pard"}
         ],
         "Makassar": [
-            {"name": "Widia Julianti Siddik, S.Psi., M.Psi., Psikolog", "profile_link": "https://widiapsi.carrd.co/", "image_path": r"https://lh3.google.com/u/0/d/1KVqXjoMU5firvD_zskObfuwvUNM3GH_r=w756-h877-iv1"}
+            {"name": "Widia Julianti Siddik, S.Psi., M.Psi., Psikolog", "profile_link": "https://widiapsi.carrd.co/"}
         ]
     }
 
@@ -149,20 +149,11 @@ def recommend_nearest_psychologist_page(user_location, selected_city):
     for psychologist in psychologists:
         st.success(f"Psikolog terdekat untuk Anda di {selected_city}: {psychologist['name']}")
         st.markdown(f"Link Halodoc: [{psychologist['name']}]({psychologist['profile_link']})")
-        image = Image.open(BytesIO(requests.get(psychologist["image_path"]).content))
-        st.image(image, caption=f"Profil Psikolog {psychologist['name']}", use_column_width=True)
-
+        
 # Main function
 def main():
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
-
-    # Load the image from URL
-    image_url = "https://lh3.google.com/u/0/d/1nT3GboT9stzY6asq_lhYqn0sPlw3ycC2=w756-h877-iv1"
-    response = requests.get(image_url)
-    image = Image.open(BytesIO(response.content))
-    
-    st.image(image, caption="STRESS ME OUT", use_column_width=True)
 
     # Sidebar
     menu = ["Login", "Sign Up", "Deteksi Tingkat Stress", "Weekly Report", "Reset Report", "Psikolog Terdekat", "Rekomendasi Video"]
